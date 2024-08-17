@@ -2,57 +2,62 @@ package utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.firefox.GeckoDriverService;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BrowserFactory {
-    private static WebDriver driver = null;
-    private static ChromeDriverService serviceChrome;
-    private static GeckoDriverService serviceFirefox;
+
+    private static final List<String> DEFAULT_OPTIONS = new ArrayList<>();
 
     public static WebDriver getBrowserDriver(String browserName) throws Exception {
-        switch (browserName){
+        WebDriver driver;
+
+        switch (browserName.toLowerCase()){
             case "firefox":{
-                WebDriverManager wdm = WebDriverManager.firefoxdriver();
-                wdm.setup();
+                WebDriverManager.firefoxdriver().setup();
+                FirefoxOptions firefoxOptions = getFirefoxOptions();
+                driver = new FirefoxDriver(firefoxOptions);
 
-                serviceFirefox = new GeckoDriverService.Builder()
-                        .usingDriverExecutable(new File(wdm.getDownloadedDriverPath()))
-                        .usingAnyFreePort()
-                        .build();
-                serviceFirefox.start();
-
-                //*************************************************************************************
-
-                driver = new RemoteWebDriver(serviceFirefox.getUrl(), new DesiredCapabilities());
-                driver.manage().window().maximize();
                 break;
             }
             case "chrome": {
-
-                System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
-                WebDriverManager wdm = WebDriverManager.chromedriver();
-                wdm.setup();
-                serviceChrome = new ChromeDriverService.Builder()
-                        .usingDriverExecutable(new File(wdm.getDownloadedDriverPath()))
-                        .usingAnyFreePort()
-                        .build();
-                serviceChrome.start();
-
-                //*************************************************************************************
-                driver = new RemoteWebDriver(serviceChrome.getUrl(), new DesiredCapabilities());
-                driver.manage().window().maximize();
+                WebDriverManager.chromedriver().setup();
+                ChromeOptions chromeOptions = getChromeOptions();
+                driver = new ChromeDriver(chromeOptions);
 
                 break;
             }
-                default:
-                    //If no browser passed throw exception
-                    throw new Exception("Not Supported Browser.");
+            default:
+                //If no browser passed throw exception
+                throw new Exception("Not Supported Browser:"+browserName);
         }
         return driver;
+    }
+
+    static {
+        DEFAULT_OPTIONS.add("--no-sandbox");
+        DEFAULT_OPTIONS.add("--disable-dev-shm-usage");
+        DEFAULT_OPTIONS.add("--disable-extensions");
+        DEFAULT_OPTIONS.add("--disable-gpu");
+        DEFAULT_OPTIONS.add("--start-maximized");
+    }
+
+    private static ChromeOptions getChromeOptions(){
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments(DEFAULT_OPTIONS);
+
+        return options;
+    }
+
+    private static FirefoxOptions getFirefoxOptions(){
+        FirefoxOptions options = new FirefoxOptions();
+        options.addArguments(DEFAULT_OPTIONS);
+
+        return options;
     }
 }
