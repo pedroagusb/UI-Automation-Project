@@ -1,6 +1,5 @@
 package utils;
 
-import common.CommonSteps;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -16,16 +15,19 @@ public class WebDriverUtils {
 
     static WebDriver driver;
     private static final Logger log = LogManager.getLogger(WebDriverUtils.class);
-    public static String getProp(String property, String config) {
+    public static String getProperty(String property, String config) {
 
-        File propFile = new File(System.getProperty("user.dir") + "/src/test/resources/" + config + ".properties");
+        File filePath = new File(System.getProperty("user.dir") + "/src/test/resources/" + config + ".properties");
         String ret = null;
 
-        try(InputStream inputStream = new FileInputStream(propFile)){
-            Properties prop = new Properties();
-            prop.load(inputStream);
-            ret =  prop.getProperty(property);
-            ret = ret.startsWith("/s") ? System.getProperty("base_dir") + ret : ret;
+        try(InputStream inputStream = new FileInputStream(filePath))
+        {
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            ret =  properties.getProperty(property);
+
+            if(ret != null && ret.startsWith("/s"))
+                ret = System.getProperty("base_dir") + ret;
 
             log.info("Getting property: " + property + "from file: " + config + ".properties");
 
@@ -39,13 +41,13 @@ public class WebDriverUtils {
 
     public void getBrowser() throws Exception {
         driver = BrowserFactory.getBrowserDriver(
-                WebDriverUtils.getProp("Browser","config"));
+                WebDriverUtils.getProperty("Browser","config"));
 
         driver.navigate().to(
-                WebDriverUtils.getProp("URL","config"));
+                WebDriverUtils.getProperty("URL","config"));
 
         log.info("Browser created and navigating to {}",
-                WebDriverUtils.getProp("URL","config"));
+                WebDriverUtils.getProperty("URL","config"));
     }
 
     public void clickBrowser(){
