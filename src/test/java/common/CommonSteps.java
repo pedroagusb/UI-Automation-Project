@@ -4,6 +4,8 @@ import elements.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -21,6 +23,7 @@ public class CommonSteps {
     ImageElements imageElements = new ImageElements();
     FieldElements fieldElements = new FieldElements();
     DropboxElements dropboxElements = new DropboxElements();
+    private static final Logger log = LogManager.getLogger(CommonSteps.class);
 
     @Given("^User lunch browser and navigate to the Web Page$")
     public void userNavigateToTheWebPage() throws Exception {
