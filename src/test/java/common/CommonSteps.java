@@ -88,7 +88,7 @@ public class CommonSteps {
     @When("^User enters the (.*) credential in (.*)")
     public void userEntersCredentials(String value, String field ){
         String elementToLookFor = fieldElements.getElement(field);
-        String credentialValue = WebDriverUtils.getProp(value,"credentials");
+        String credentialValue = WebDriverUtils.getProperty(value,"credentials");
 
         new WebDriverWait(webDriverUtils.getDriver(), Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(elementToLookFor))).sendKeys(credentialValue);
     }
