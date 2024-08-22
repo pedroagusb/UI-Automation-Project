@@ -7,7 +7,7 @@ public class ImageElements {
     private final Map<String,String> listElements = new HashMap<String,String>();
 
     public String list(String nameElement){
-        listElements.put("imageHomePage","//*[@id='nava']/img");
+        //listElements.put("imageHomePage","//*[@id='nava']/img");
 
         return listElements.get(nameElement);
     }

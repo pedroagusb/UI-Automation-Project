@@ -63,7 +63,7 @@ public class CommonSteps {
 
     @When("^User click on Ok button pop up")
     public void clickOnPopUp(){
-        webDriverUtils.clickBrowser();
+        new HomePage(webDriverUtils.getDriver()).clickPopUp();
     }
 
     @When("^User upload the file clicking in (.*) button")

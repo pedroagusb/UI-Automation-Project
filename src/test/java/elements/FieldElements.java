@@ -7,10 +7,10 @@ public class FieldElements {
     private final Map<String,String> listElements = new HashMap<String,String>();
 
     public String list(String nameElement){
-        listElements.put("signUpUsernameField","//*[@id='sign-username']");
-        listElements.put("signUpPasswordField","//*[@id='sign-password']");
-        listElements.put("loginUsernameField","//*[@id='loginusername']");
-        listElements.put("loginPasswordField","//*[@id='loginpassword']");
+        //listElements.put("signUpUsernameField","//*[@id='sign-username']");
+        //listElements.put("signUpPasswordField","//*[@id='sign-password']");
+        //listElements.put("loginUsernameField","//*[@id='loginusername']");
+        //listElements.put("loginPasswordField","//*[@id='loginpassword']");
 
         return listElements.get(nameElement);
     }
