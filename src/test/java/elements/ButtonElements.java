@@ -8,9 +8,9 @@ public class ButtonElements {
     private final Map<String,String> listElements = new HashMap<String,String>();
 
     public String list(String nameElement){
-        listElements.put("signUpButton","//*[@id='signin2']");
-        listElements.put("signUpAcceptButton","//*[@id='signInModal']/div/div/div[3]/button[2]");
-        listElements.put("logInButton","//*[@id='login2']");
+        //listElements.put("signUpButton","//*[@id='signin2']");
+        //listElements.put("signUpAcceptButton","//*[@id='signInModal']/div/div/div[3]/button[2]");
+        //listElements.put("logInButton","//*[@id='login2']");
         listElements.put("loginAcceptButton","//*[@id='logInModal']/div/div/div[3]/button[2]");
         listElements.put("addToCartButton","//*[@id='tbodyid']/div[2]/div/a");
         listElements.put("cartButton","//*[@id='navbarExample']/ul/li[4]/a");

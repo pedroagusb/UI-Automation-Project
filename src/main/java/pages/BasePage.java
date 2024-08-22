@@ -5,7 +5,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.BrowserFactory;
 import utils.WaitFactory;
 
 import java.time.Duration;
@@ -40,7 +42,11 @@ public class BasePage {
         log.info("The content has been cleared from the element: {}", element);
     }
 
-    protected void captureScreenshot(){ }
+    protected void waitForAlertAndAcceptIt(){
+        wait.until(ExpectedConditions.alertIsPresent()).accept();
 
-    protected void popUpManagement(){ }
+        log.info("Alert is present and was accepted");
+    }
+
+    protected void captureScreenshot(){ }
 }

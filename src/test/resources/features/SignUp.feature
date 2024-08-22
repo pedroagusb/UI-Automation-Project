@@ -11,7 +11,7 @@ Feature: Sign Up page
     And User enters the Password credential in SignUp Password
     And User click on 'SignUpAccept' button
     And User click on Ok button pop up
-    And User click on 'Log In' button
+    And User click on 'LogIn' button
     And User enters the Username credential in Login Username
     And User enters the Password credential in Login Password
     And User click on 'Login Accept' button

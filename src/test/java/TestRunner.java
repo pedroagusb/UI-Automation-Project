@@ -1,3 +1,4 @@
+import io.cucumber.java.AfterAll;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.AfterMethod;
@@ -13,10 +14,9 @@ import utils.WebDriverUtils;
 
 public class TestRunner extends AbstractTestNGCucumberTests {
 
-    @AfterMethod(alwaysRun = true)
+    @AfterAll()
     public void tearDownClass(){
-        WebDriverUtils webDriverUtils = new WebDriverUtils();
-        webDriverUtils.TearDown();
+        new WebDriverUtils().tearDown();
     }
 }
 

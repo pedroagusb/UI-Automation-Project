@@ -32,11 +32,15 @@ public class WebDriverUtils {
             log.info("Getting property: {} from file: {}.properties", property, config);
 
         } catch (FileNotFoundException e) {
-            log.fatal("A fatal error occur trying to read the file", e);
+            log.fatal("A fatal error occur trying to read the file {}", e.getMessage(), e);
         } catch (IOException e) {
             log.error("Can not read property file. {}", e.getMessage(), e);
         }
         return ret;
+    }
+
+    public static String getCredential(String property){
+        return getProperty(property,"credentials");
     }
 
     public static void getBrowserAndNavigateTo() {
@@ -49,17 +53,10 @@ public class WebDriverUtils {
         log.info("Browser created and navigating to {}", driver.getCurrentUrl());
     }
 
-    public void clickBrowser(){
-        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.alertIsPresent()).accept();
-        driver.switchTo().defaultContent();
-
-        log.info("Popup clicked and accepted");
-    }
-
     public WebDriver getDriver(){
         return driver;
     }
-    public void TearDown() {
+    public void tearDown() {
         if (driver != null){
             driver.close();
             driver.quit();
