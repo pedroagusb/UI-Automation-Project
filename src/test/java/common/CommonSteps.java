@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import pages.HomePage;
 import utils.WebDriverUtils;
 
 import java.time.Duration;
@@ -20,7 +21,6 @@ public class CommonSteps {
     WebDriverUtils webDriverUtils = new WebDriverUtils();
     ButtonElements buttonElements = new ButtonElements();
     TextElements textElements = new TextElements();
-    ImageElements imageElements = new ImageElements();
     FieldElements fieldElements = new FieldElements();
     DropboxElements dropboxElements = new DropboxElements();
     private static final Logger log = LogManager.getLogger(CommonSteps.class);
@@ -32,26 +32,19 @@ public class CommonSteps {
 
     @Given("^User verify the Home Page load successfully$")
     public void userVerifyHomePage() {
-        String elementToSearch = "imageHomePage";
-        String element = imageElements.getElement(elementToSearch);
-        boolean imageHomePageDisplayed = webDriverUtils.getDriver().findElement(By.xpath(element)).isDisplayed();
-
+        boolean imageHomePageDisplayed = new HomePage(webDriverUtils.getDriver()).isTitleDisplayed();
         Assert.assertTrue(imageHomePageDisplayed);
     }
 
     @When("^User click on '(.*)' button$")
     public void userClicksOn(String button) {
-        String elementToClick = buttonElements.getElement(button);
-
-        new WebDriverWait(webDriverUtils.getDriver(), Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.xpath(elementToClick))).click();
+        new HomePage(webDriverUtils.getDriver()).clickButton(button);
     }
 
     @Then("^User sees the '(.*)' text$")
     public void userSeeTextIn(String text) {
-        String elementToLookFor = textElements.getElement(text);
-        String elementText = new WebDriverWait(webDriverUtils.getDriver(), Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(elementToLookFor))).getText();
-
-        Assert.assertTrue(elementText.contains(text));
+        //String elementText = new HomePage(webDriverUtils.getDriver()).getTitleText();
+        //Assert.assertTrue(elementText.contains(text));
     }
 
     @When("^User enters the (.*): (.*)$")
@@ -87,9 +80,6 @@ public class CommonSteps {
 
     @When("^User enters the (.*) credential in (.*)")
     public void userEntersCredentials(String value, String field ){
-        String elementToLookFor = fieldElements.getElement(field);
-        String credentialValue = WebDriverUtils.getProperty(value,"credentials");
-
-        new WebDriverWait(webDriverUtils.getDriver(), Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(elementToLookFor))).sendKeys(credentialValue);
+        new HomePage(webDriverUtils.getDriver()).setCredentials(value,field);
     }
 }

@@ -6,10 +6,10 @@ Feature: Sign Up page
 
   @TC-0001 @Pass
   Scenario: 1 - New user can buy a laptop
-    When User click on 'Sign Up' button
+    When User click on 'SignUp' button
     And User enters the Username credential in SignUp Username
     And User enters the Password credential in SignUp Password
-    And User click on 'Sign Up Accept' button
+    And User click on 'SignUpAccept' button
     And User click on Ok button pop up
     And User click on 'Log In' button
     And User enters the Username credential in Login Username
