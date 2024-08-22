@@ -1,5 +1,6 @@
 package Pages;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -9,6 +10,10 @@ public class HomePage extends BasePage{
     Los métodos públicos encapsulan las interacciones con esos elementos (por ejemplo, hacer clic en un botón,
     escribir en un campo de texto).
      */
+
+    public HomePage(WebDriver driver){
+        super(driver);
+    }
 
     @FindBy(xpath = "//*[@id='nava']/img")
     private WebElement imageHomePage;

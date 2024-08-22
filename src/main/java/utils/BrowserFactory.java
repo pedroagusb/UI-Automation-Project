@@ -1,6 +1,5 @@
 package utils;
 
-import common.CommonSteps;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -10,11 +9,18 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static utils.WebDriverUtils.driver;
+
 public class BrowserFactory {
+
+    private BrowserFactory(){
+
+    }
 
     private static final Logger log = LogManager.getLogger(BrowserFactory.class);
     private static final List<String> DEFAULT_OPTIONS = new ArrayList<>();
@@ -38,12 +44,12 @@ public class BrowserFactory {
                 break;
             }
             default: {
-                log.fatal("Browser don't detected " + browserName);
-                throw new Exception("Not Supported Browser:" + browserName);
+                log.fatal("Browser don't detected");
+                throw new NoSuchElementException("Not Supported Browser:" + browserName);
             }
         }
 
-        log.info(browserName+" selected. Driver created successfully");
+        log.info("Browser selected. Driver created successfully");
         return driver;
     }
 
@@ -69,5 +75,9 @@ public class BrowserFactory {
 
         log.info("Firefox options created");
         return options;
+    }
+
+    public static WebDriver getDriver() {
+        return driver;
     }
 }
