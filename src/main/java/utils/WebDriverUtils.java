@@ -29,7 +29,7 @@ public class WebDriverUtils {
             if(ret != null && ret.startsWith("/s"))
                 ret = System.getProperty("base_dir") + ret;
 
-            log.info("Getting property: " + property + "from file: " + config + ".properties");
+            log.info("Getting property: {} from file: {}.properties", property, config);
 
         } catch (FileNotFoundException e) {
             log.fatal("A fatal error occur trying to read the file", e);
@@ -39,15 +39,14 @@ public class WebDriverUtils {
         return ret;
     }
 
-    public void getBrowser() throws Exception {
+    public static void getBrowserAndNavigateTo() {
         driver = BrowserFactory.getBrowserDriver(
                 WebDriverUtils.getProperty("Browser","config"));
 
         driver.navigate().to(
                 WebDriverUtils.getProperty("URL","config"));
 
-        log.info("Browser created and navigating to {}",
-                WebDriverUtils.getProperty("URL","config"));
+        log.info("Browser created and navigating to {}", driver.getCurrentUrl());
     }
 
     public void clickBrowser(){

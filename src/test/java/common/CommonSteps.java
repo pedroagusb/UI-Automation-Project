@@ -26,8 +26,8 @@ public class CommonSteps {
     private static final Logger log = LogManager.getLogger(CommonSteps.class);
 
     @Given("^User lunch browser and navigate to the Web Page$")
-    public void userNavigateToTheWebPage() throws Exception {
-        webDriverUtils.getBrowser();
+    public void userNavigateToTheWebPage() {
+        WebDriverUtils.getBrowserAndNavigateTo();
     }
 
     @Given("^User verify the Home Page load successfully$")

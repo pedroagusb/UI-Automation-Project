@@ -25,7 +25,7 @@ public class BrowserFactory {
     private static final Logger log = LogManager.getLogger(BrowserFactory.class);
     private static final List<String> DEFAULT_OPTIONS = new ArrayList<>();
 
-    public static WebDriver getBrowserDriver(String browserName) throws Exception {
+    public static WebDriver getBrowserDriver(String browserName) {
         WebDriver driver;
 
         switch (browserName.toLowerCase()){
