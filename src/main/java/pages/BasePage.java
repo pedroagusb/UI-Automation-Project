@@ -13,7 +13,7 @@ import utils.WaitFactory;
 import java.time.Duration;
 
 public class BasePage {
-    private static final Logger log = LogManager.getLogger(BasePage.class);
+    protected static final Logger log = LogManager.getLogger(BasePage.class);
     protected WebDriver driver;
     protected WebDriverWait wait;
 
