@@ -29,7 +29,7 @@ public class WebDriverUtils {
             if(ret != null && ret.startsWith("/s"))
                 ret = System.getProperty("base_dir") + ret;
 
-            log.info("Getting property: {} from file: {}.properties", property, config);
+            log.info("Getting property: {}, from file: {}.properties", property, config);
 
         } catch (FileNotFoundException e) {
             log.fatal("A fatal error occur trying to read the file {}", e.getMessage(), e);
@@ -51,6 +51,11 @@ public class WebDriverUtils {
                 WebDriverUtils.getProperty("URL","config"));
 
         log.info("Browser created and navigating to {}", driver.getCurrentUrl());
+    }
+
+    public String manipulateElement (String elementToManipulate){
+        String element = elementToManipulate.substring(0,1).toLowerCase()+elementToManipulate.substring(1);
+        return element.replaceAll("\\s","")+"Button";
     }
 
     public WebDriver getDriver(){

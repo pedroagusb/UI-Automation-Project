@@ -16,9 +16,9 @@ Feature: Sign Up page
     And User enters the Password credential in Login Password
     And User click on 'Login Accept' button
     Then User sees the 'Welcome' text
-    When User selects the Laptop Sony Vaio i5
-    And User click on 'Add To Cart' button
+    When User selects the LaptopSonyVaioi5
+    And User click on 'AddToCart' button
     And User click on Ok button pop up
     And User click on 'Cart' button
-    Then User sees the 'Sony vaio i5' text
+    Then User sees the 'Sony vaio i5' text in Cart Page
     
