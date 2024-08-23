@@ -33,14 +33,18 @@ public class HomePage extends BasePage{
     private final Map<String, By> buttonLocators = Map.of(
             "signUp", By.xpath("//*[@id='signin2']"),
             "signUpAccept", By.xpath("//*[@id='signInModal']/div/div/div[3]/button[2]"),
-            "signIn", By.xpath("//*[@id='login2']")
+            "signIn", By.xpath("//*[@id='login2']"),
+            "login", By.xpath("//*[@id='logInModal']/div/div/div[3]/button[2]"),
+            "laptopSonyVaioi5", By.xpath("//*[@id='tbodyid']/div[8]/div/a"),
+            "addToCart", By.xpath("//*[@id='tbodyid']/div[2]/div/a"),
+            "cart", By.xpath("//*[@id='navbarExample']/ul/li[4]/a")
     );
 
     public boolean isTitleDisplayed(){
         return wait.until(ExpectedConditions.visibilityOf(imageHomePage)).isDisplayed();
     }
 
-    public String getTitleText(){
+    public String getWelcomeText(){
         return wait.until(ExpectedConditions.visibilityOf(welcomeText)).getText();
     }
 
@@ -60,25 +64,6 @@ public class HomePage extends BasePage{
     }
     public By getButtonLocator(String name) {
         return getLocator(buttonLocators, name, ElementTypes.BUTTON);
-    }
-
-    /**
-     * This method allows to unify if locator is null.
-     * Also allows to trait in a more generic way the getLocator.
-     * @param locatorMap
-     * @param name
-     * @param type
-     * @return locator
-     */
-    private By getLocator(Map<String, By> locatorMap, String name, ElementTypes type){
-        By locator = locatorMap.get(name);
-
-        if(locator == null){
-            log.error("Not valid {} locator: {}", type.name().toLowerCase(), name);
-            throw new IllegalArgumentException("Invalid " + type.name().toLowerCase() + ": " + name);
-        }
-
-        return locator;
     }
 
     public void clickPopUp(){
