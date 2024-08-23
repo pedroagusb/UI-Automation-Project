@@ -1,21 +1,18 @@
 package pages;
 
+import enums.ElementTypes;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.WebDriverUtils;
+
+import java.util.Map;
 
 import static enums.WaitStrategy.*;
 
 public class HomePage extends BasePage{
-    /*
-    Los elementos de la página se definen como variables privadas (por ejemplo, utilizando Page Factory).
-    Los métodos públicos encapsulan las interacciones con esos elementos (por ejemplo, hacer clic en un botón,
-    escribir en un campo de texto).
-     */
 
     public HomePage(WebDriver driver){
         super(driver);
@@ -25,13 +22,19 @@ public class HomePage extends BasePage{
     private WebElement imageHomePage;
     @FindBy(xpath = "//*[@id='nameofuser']")
     private WebElement welcomeText;
-    private final By signUpButton = By.xpath("//*[@id='signin2']");
-    private final By signUpAcceptButton = By.xpath("//*[@id='signInModal']/div/div/div[3]/button[2]");
-    private final By usernameSignUpField = By.xpath("//*[@id='sign-username']");
-    private final By passwordSignUpField = By.xpath("//*[@id='sign-password']");
-    private final By usernameSignInField = By.xpath("//*[@id='loginusername']");
-    private final By passwordSignInField = By.xpath("//*[@id='loginpassword']");
-    private final By logInButton = By.xpath("//*[@id='login2']");
+
+    private final Map<String,By> fieldLocators = Map.of(
+            "signUpUsername", By.xpath("//*[@id='sign-username']"),
+            "signUpPassword", By.xpath("//*[@id='sign-password']"),
+            "signInUsername", By.xpath("//*[@id='loginusername']"),
+            "signInPassword", By.xpath("//*[@id='loginpassword']")
+    );
+
+    private final Map<String, By> buttonLocators = Map.of(
+            "signUp", By.xpath("//*[@id='signin2']"),
+            "signUpAccept", By.xpath("//*[@id='signInModal']/div/div/div[3]/button[2]"),
+            "signIn", By.xpath("//*[@id='login2']")
+    );
 
     public boolean isTitleDisplayed(){
         return wait.until(ExpectedConditions.visibilityOf(imageHomePage)).isDisplayed();
@@ -42,32 +45,40 @@ public class HomePage extends BasePage{
     }
 
     public void clickButton(String element){
-        if(element.contains("signUp")){
-            click(signUpButton, CLICKABLE, element);
-        } else if (element.contains("signUpAccept")){
-            click(signUpAcceptButton, CLICKABLE, element);
-        } else if (element.contains("logIn")) {
-            click(logInButton,CLICKABLE,element);
-        }
+        By locator = getButtonLocator(element);
+        click(locator,CLICKABLE,element);
     }
 
     public void setCredentials(String value, String field){
-        if(field.contains("signUpUsername")){
-            String username = WebDriverUtils.getCredential(value);
-            sendKeys(usernameSignUpField,username,PRESENCE, field);
+        String credential = WebDriverUtils.getCredential(value);
+        By locator = getFieldLocator(value);
+        sendKeys(locator, credential, PRESENCE, field);
+    }
+
+    public By getFieldLocator(String name) {
+        return getLocator(fieldLocators, name, ElementTypes.FIELD);
+    }
+    public By getButtonLocator(String name) {
+        return getLocator(buttonLocators, name, ElementTypes.BUTTON);
+    }
+
+    /**
+     * This method allows to unify if locator is null.
+     * Also allows to trait in a more generic way the getLocator.
+     * @param locatorMap
+     * @param name
+     * @param type
+     * @return locator
+     */
+    private By getLocator(Map<String, By> locatorMap, String name, ElementTypes type){
+        By locator = locatorMap.get(name);
+
+        if(locator == null){
+            log.error("Not valid {} locator: {}", type.name().toLowerCase(), name);
+            throw new IllegalArgumentException("Invalid " + type.name().toLowerCase() + ": " + name);
         }
-        else if (field.contains("signUpPassword")) {
-            String password = WebDriverUtils.getCredential(value);
-            sendKeys(passwordSignUpField,password,PRESENCE,field);
-        }
-        else if (field.contains("signInUsername")) {
-            String password = WebDriverUtils.getCredential(value);
-            sendKeys(usernameSignInField,password,PRESENCE,field);
-        }
-        else if (field.contains("signInPassword")) {
-            String password = WebDriverUtils.getCredential(value);
-            sendKeys(passwordSignInField,password,PRESENCE,field);
-        }
+
+        return locator;
     }
 
     public void clickPopUp(){
