@@ -41,6 +41,7 @@ public class HomePage extends BasePage{
     );
 
     public boolean isTitleDisplayed(){
+        log.info("The element is: {}", imageHomePage);
         return wait.until(ExpectedConditions.visibilityOf(imageHomePage)).isDisplayed();
     }
 

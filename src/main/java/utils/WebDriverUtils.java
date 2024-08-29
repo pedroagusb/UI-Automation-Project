@@ -1,11 +1,8 @@
 package utils;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.*;
-import java.time.Duration;
 import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 public class WebDriverUtils {
 
-    static WebDriver driver;
+    static WebDriver driver = BrowserFactory.getDriver();
     private static final Logger log = LogManager.getLogger(WebDriverUtils.class);
     public static String getProperty(String property, String config) {
 
@@ -61,12 +58,12 @@ public class WebDriverUtils {
     public WebDriver getDriver(){
         return driver;
     }
-    public void tearDown() {
-        if (driver != null){
-            driver.close();
+    public void closeDriver() {
+        if (driver != null) {
             driver.quit();
-
-            log.info("Driver closed and quited");
+            driver = null;
         }
+
+        log.info("Driver closed and quited");
     }
 }
