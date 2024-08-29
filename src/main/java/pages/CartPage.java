@@ -7,9 +7,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.Map;
 
-import static enums.WaitStrategy.CLICKABLE;
-import static enums.WaitStrategy.VISIBLE;
-
 public class CartPage extends BasePage{
 
     public CartPage(WebDriver driver){
